@@ -10,6 +10,11 @@ def preprocess(df_x_train, df_y_train, df_x_test, df_y_test):
     mlflow.set_tracking_uri("http://localhost:5000")
     mlflow.set_experiment("data_preprocessing")
 
+    df_x_train = pd.read_csv(df_x_train)
+    df_y_train = pd.read_csv(df_y_train)
+    df_x_test = pd.read_csv(df_x_test)
+    df_y_test = pd.read_csv(df_y_test)
+
     with mlflow.start_run():
         x_train = df_x_train.to_numpy()
         y_train = df_y_train.to_numpy()
@@ -31,4 +36,10 @@ def preprocess(df_x_train, df_y_train, df_x_test, df_y_test):
                             artifact_path="preprocess_data code")
         mlflow.end_run()
 
-    return df_x_train, df_y_train, df_x_test, df_y_test
+    df_x_train.to_csv("train/x_train_preprocessing.csv", index=False)
+    df_y_train.to_csv("train/y_train_preprocessing.csv", index=False)
+    df_x_test.to_csv("test/x_test_preprocessing.csv", index=False)
+    df_y_test.to_csv("test/y_test_preprocessing.csv", index=False)
+
+    return "train/x_train_preprocessing.csv", "train/y_train_preprocessing.csv", \
+           "test/x_test_preprocessing.csv", "test/y_test_preprocessing.csv"

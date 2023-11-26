@@ -21,4 +21,9 @@ def load():
                             artifact_path="load_data code")
         mlflow.end_run()
 
-    return df_x_train, df_y_train, df_x_test, df_y_test
+    df_x_train.to_csv("train/x_train.csv", index=False)
+    df_y_train.to_csv("train/y_train.csv", index=False)
+    df_x_test.to_csv("test/x_test.csv", index=False)
+    df_y_test.to_csv("test/y_test.csv", index=False)
+
+    return "train/x_train.csv", "train/y_train.csv", "test/x_test.csv", "test/y_test.csv"
